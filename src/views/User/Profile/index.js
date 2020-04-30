@@ -1,10 +1,18 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {useHistory} from 'react-router-dom'
+
 import {getUserProfile} from '../../../redux/actions'
+import {Button} from '../../../components'
 
 const Profile = () => {
+  const history = useHistory()
   const dispatch = useDispatch()
   const userState = useSelector(state => state.user)
+
+  const submitButton = () => {
+    history.push(`/user/profile/${userState.data.id}`)
+  }
 
   useEffect(() => {
     async function getUser() {
@@ -58,6 +66,9 @@ const Profile = () => {
                 <path d="M437.332 80H74.668C51.199 80 32 99.198 32 122.667v266.666C32 412.802 51.199 432 74.668 432h362.664C460.801 432 480 412.802 480 389.333V122.667C480 99.198 460.801 80 437.332 80zM432 170.667L256 288 80 170.667V128l176 117.333L432 128v42.667z" />
               </svg>
               <h1 className="px-2 text-sm">{email}</h1>
+            </div>
+            <div className="mt-6">
+              <Button value="Edit Profile" onClick={submitButton} />
             </div>
           </div>
         </div>

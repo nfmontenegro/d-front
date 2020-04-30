@@ -1,5 +1,5 @@
 import {requestAPI} from '../../api'
-import {ERROR, LOADING, REQUEST_METHOD} from '../constants'
+import {ERROR, LOADING, REQUEST_METHOD, REQUEST_SUCCESS} from '../constants'
 
 const failureRequest = errorMessage => ({
   type: ERROR,
