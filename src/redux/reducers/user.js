@@ -1,4 +1,4 @@
-import {REQUEST_SUCCESS, NOT_PERSIST, ERROR, LOADING} from '../constants'
+import {REQUEST_SUCCESS, NOT_PERSIST, ERROR, LOADING, LOG_OUT} from '../constants'
 
 const INITIAL_STATE = {
   data: null,
@@ -32,14 +32,20 @@ export default function (state = INITIAL_STATE, action) {
         loading: false,
         isAuthenticated: true
       }
-    case NOT_PERSIST: {
+    case LOG_OUT:
+      return {
+        data: null,
+        loading: false,
+        error: false,
+        isAuthenticated: false
+      }
+    case NOT_PERSIST:
       return {
         data: null,
         error: false,
         loading: false,
         isAuthenticated: false
       }
-    }
     default:
       return state
   }
