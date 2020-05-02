@@ -59,6 +59,19 @@ function getUserProfile() {
   }
 }
 
+function getUsers() {
+  return async dispatch => {
+    try {
+      dispatch(loadingRequest())
+      const response = await requestAPI('users', REQUEST_METHOD['GET'])
+      return dispatch(successRequest(response.data))
+    } catch (err) {
+      const errorMessage = err.response.data.message
+      return dispatch(failureRequest(errorMessage))
+    }
+  }
+}
+
 function logOutUser() {
   localStorage.clear()
   return {
@@ -66,4 +79,4 @@ function logOutUser() {
   }
 }
 
-export {registerUserAction, loginUserAction, getUserProfile, logOutUser}
+export {registerUserAction, loginUserAction, getUserProfile, logOutUser, getUsers}

@@ -2,7 +2,7 @@ import Signup from './Register'
 import Signin from './Login'
 import Welcome from './Welcome'
 import Home from './Home'
-import Profiles from './Profiles'
+import Users from './Users'
 import Profile from './Profile'
 
-export {Signup, Signin, Welcome, Home, Profiles, Profile}
+export {Signup, Signin, Welcome, Home, Users, Profile}
