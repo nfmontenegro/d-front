@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
+import {Spinner} from '../../../components'
 import {getUsers} from '../../../redux/actions'
 
 function Users() {
@@ -8,17 +9,18 @@ function Users() {
   const usersState = useSelector(state => state.user)
 
   useEffect(() => {
-    async function getUser() {
-      const users = await dispatch(getUsers())
-      return users
-    }
-    getUser()
+    dispatch(getUsers())
   }, [dispatch])
 
   const {loading, data} = usersState
-  return (
-    <div className="grid grid-cols-4 gap-4">
-      {!loading &&
+
+  return loading ? (
+    <div className="flex justify-center mt-8">
+      <Spinner width="64" height="64" />
+    </div>
+  ) : (
+    <div className="grid grid-cols-3 gap-4">
+      {data.length &&
         data.map(user => (
           <div key={user.id} className="min-h-full flex bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-sm bg-white shadow-lg rounded-lg overflow-hidden my-4">
