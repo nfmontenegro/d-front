@@ -1,5 +1,5 @@
-import {requestAPI} from '../../api'
-import {ERROR, LOADING, REQUEST_METHOD, REQUEST_SUCCESS, LOG_OUT} from '../constants'
+import {requestAPI} from "../../api"
+import {ERROR, LOADING, REQUEST_METHOD, REQUEST_SUCCESS, LOG_OUT} from "../constants"
 
 function failureRequest(errorMessage) {
   return {
@@ -24,7 +24,7 @@ function loadingRequest() {
 function registerUserAction(formValues) {
   return async dispatch => {
     try {
-      const response = await requestAPI('users', REQUEST_METHOD['POST'], formValues)
+      const response = await requestAPI("users", REQUEST_METHOD["POST"], formValues)
       return dispatch(successRequest(response.data))
     } catch (err) {
       const errorMessage = err.response.data.message
@@ -36,12 +36,12 @@ function registerUserAction(formValues) {
 function loginUserAction(formValues) {
   return async dispatch => {
     try {
-      const response = await requestAPI('login', REQUEST_METHOD['POST'], formValues)
-      localStorage.setItem('token', response.data.token)
+      dispatch(loadingRequest())
+      const response = await requestAPI("login", REQUEST_METHOD["POST"], formValues)
+      localStorage.setItem("token", response.data.token)
       return dispatch(successRequest(response.data))
     } catch (err) {
-      const errorMessage = err.response.data.message
-      return dispatch(failureRequest(errorMessage))
+      return dispatch(failureRequest(err.message))
     }
   }
 }
@@ -50,11 +50,10 @@ function getUserProfile() {
   return async dispatch => {
     try {
       dispatch(loadingRequest())
-      const response = await requestAPI('profile', REQUEST_METHOD['GET'])
+      const response = await requestAPI("profile", REQUEST_METHOD["GET"])
       return dispatch(successRequest(response.data))
     } catch (err) {
-      const errorMessage = err.response.data.message
-      return dispatch(failureRequest(errorMessage))
+      return dispatch(failureRequest(err.message))
     }
   }
 }
@@ -63,7 +62,7 @@ function getUsers() {
   return async dispatch => {
     try {
       dispatch(loadingRequest())
-      const response = await requestAPI('users', REQUEST_METHOD['GET'])
+      const response = await requestAPI("users", REQUEST_METHOD["GET"])
       return dispatch(successRequest(response.data))
     } catch (err) {
       const errorMessage = err.response.data.message

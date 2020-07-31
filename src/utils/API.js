@@ -1,15 +1,16 @@
-import axios from 'axios'
-import {store} from '../redux/store'
+import axios from "axios"
+import {store} from "../redux/store"
 
 const API = axios.create({
-  baseURL: 'http://localhost:8080/api/v1/',
-  responseType: 'json'
+  baseURL: "http://localhost:3000/api/v1/",
+  responseType: "json"
 })
 
 API.interceptors.request.use(config => {
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token")
   if (token) {
-    config.headers['Authorization'] = `Bearer ${token}`
+    config.headers["Authorization"] = `Bearer ${token}`
+    config.headers["Content-type"] = "application-json"
   }
   return config
 })
@@ -17,12 +18,14 @@ API.interceptors.request.use(config => {
 API.interceptors.response.use(
   response => response,
   error => {
+    localStorage.removeItem("token")
+    const [response] = error.response.data.result
     //move to constants
     const statusCodes = [401, 403]
-    if (statusCodes.includes(error.response.status)) {
-      store.dispatch({type: 'NOT_PERSIST'})
+    if (statusCodes.includes(response.error.code)) {
+      store.dispatch({type: "NOT_PERSIST"})
     }
-    return error
+    return Promise.reject(response.error)
   }
 )
 

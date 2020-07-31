@@ -1,4 +1,4 @@
-import {API} from '../utils'
+import {API} from "../utils"
 
 const requestAPI = async (url, method, data) =>
   await API({

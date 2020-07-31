@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
-import {useFormik} from 'formik'
-import {useDispatch, useSelector} from 'react-redux'
+import React, {useEffect, useState} from "react"
+import {useFormik} from "formik"
+import {useDispatch, useSelector} from "react-redux"
 
-import {Button, Input, Spinner} from '../../../components'
-import {getUserProfile} from '../../../redux/actions'
+import {Button, Input, Spinner} from "../../../components"
+import {getUserProfile} from "../../../redux/actions"
 
 function EditProfile() {
   const [user, setUser] = useState({})
@@ -22,16 +22,16 @@ function EditProfile() {
     dispatch(getUserProfile())
     const {loading, data} = userState
     setUser(data)
-  }, [dispatch])
+  }, [dispatch, userState])
 
   return userState.loading ? (
-    <div className="flex justify-center mt-8">
+    <div className="flex justify-center">
       <Spinner width="64" height="64" />
     </div>
   ) : (
-    <section className="relative py-16 bg-gray-300">
-      <div className="container mx-auto px-16">
-        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-10">
+    <section className="relative py-10 bg-gray-300">
+      <div className="container mx-auto px-10">
+        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
           <div className="px-6">
             <div className="flex flex-wrap justify-center">
               <div className="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
@@ -40,7 +40,7 @@ function EditProfile() {
                     alt="..."
                     src="https://avatars1.githubusercontent.com/u/13742592?s=400&u=23f1a9b586627304907d7102638822bc72883707&v=4"
                     className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16"
-                    style={{maxWidth: '150px'}}
+                    style={{maxWidth: "150px"}}
                   />
                 </div>
               </div>
