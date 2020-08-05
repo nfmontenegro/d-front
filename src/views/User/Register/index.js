@@ -1,34 +1,37 @@
-import React, {useState} from 'react'
-import {useFormik} from 'formik'
-import {useDispatch, useSelector} from 'react-redux'
-import {useHistory} from 'react-router-dom'
-import * as Yup from 'yup'
+import React, {useState} from "react"
+import {useFormik} from "formik"
+import {useDispatch, useSelector} from "react-redux"
+import {useHistory} from "react-router-dom"
+import * as Yup from "yup"
 
-import {registerUserAction} from '../../../redux/actions'
-import {Button, Input, Notification} from '../../../components'
-import {useEffect} from 'react'
+import {registerUserAction} from "../../../redux/actions"
+import {Button, Input, Notification} from "../../../components"
+import {useEffect} from "react"
 
 const INITIAL_VALUES = {
-  email: '',
-  password: '',
-  name: '',
-  lastname: '',
+  email: "",
+  password: "",
+  name: "",
+  lastname: ""
 }
 
 const SignupSchema = Yup.object().shape({
-  password: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+  email: Yup.string().email("Invalid email").required("Required")
 })
 
 const Signup = () => {
   const dispatch = useDispatch()
-  const userState = useSelector((state) => state.user)
+  const userState = useSelector(state => state.user)
   const [notification, setNotification] = useState({show: false, message: null})
   const history = useHistory()
   const formik = useFormik({
     initialValues: INITIAL_VALUES,
     validationSchema: SignupSchema,
-    onSubmit: async (values) => await dispatch(registerUserAction(values)),
+    onSubmit: async values => {
+      await dispatch(registerUserAction(values))
+      //Notification message, we already sent one message to confirm the account
+    }
   })
 
   const {handleSubmit, handleChange, values, isSubmitting, setSubmitting} = formik

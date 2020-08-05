@@ -25,7 +25,7 @@ function registerUserAction(formValues) {
   return async dispatch => {
     try {
       const response = await requestAPI("users", REQUEST_METHOD["POST"], formValues)
-      return dispatch(successRequest(response.data))
+      return dispatch(successRequest(response.data.result))
     } catch (err) {
       const errorMessage = err.response.data.message
       return dispatch(failureRequest(errorMessage))
@@ -39,7 +39,7 @@ function loginUserAction(formValues) {
       dispatch(loadingRequest())
       const response = await requestAPI("login", REQUEST_METHOD["POST"], formValues)
       localStorage.setItem("token", response.data.token)
-      return dispatch(successRequest(response.data))
+      return dispatch(successRequest(response.data.result))
     } catch (err) {
       return dispatch(failureRequest(err.message))
     }
@@ -51,7 +51,7 @@ function getUserProfile() {
     try {
       dispatch(loadingRequest())
       const response = await requestAPI("profile", REQUEST_METHOD["GET"])
-      return dispatch(successRequest(response.data))
+      return dispatch(successRequest(response.data.result))
     } catch (err) {
       return dispatch(failureRequest(err.message))
     }
@@ -63,7 +63,7 @@ function getUsers() {
     try {
       dispatch(loadingRequest())
       const response = await requestAPI("users", REQUEST_METHOD["GET"])
-      return dispatch(successRequest(response.data))
+      return dispatch(successRequest(response.data.result))
     } catch (err) {
       const errorMessage = err.response.data.message
       return dispatch(failureRequest(errorMessage))

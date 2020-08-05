@@ -1,28 +1,35 @@
-import React, {useEffect, useState} from "react"
 import {useFormik} from "formik"
+import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
+import * as Yup from "yup"
 
-import {Button, Input, Spinner} from "../../../components"
 import {getUserProfile} from "../../../redux/actions"
+import {Button, Input, Spinner} from "../../../components"
 
 function EditProfile() {
   const [user, setUser] = useState({})
   const dispatch = useDispatch()
   const userState = useSelector(state => state.user)
 
-  const handleSubmit = event => {
-    event.preventDefault()
-  }
+  const EditProfileSchema = Yup.object().shape({
+    name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required")
+  })
 
-  const handleChange = event => {
-    event.preventDefault()
-  }
+  const formik = useFormik({
+    initialValues: userState,
+    validationSchema: EditProfileSchema
+    // onSubmit: async values => await dispatch(editProfileaction(values))
+  })
+
+  const {handleSubmit, handleChange, values, isSubmitting} = formik
 
   useEffect(() => {
     dispatch(getUserProfile())
-    const {loading, data} = userState
+    const {data} = userState
     setUser(data)
   }, [dispatch, userState])
+
+  console.log("@@ values:", values)
 
   return userState.loading ? (
     <div className="flex justify-center">
