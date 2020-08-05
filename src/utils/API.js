@@ -19,7 +19,7 @@ API.interceptors.response.use(
   response => response,
   error => {
     localStorage.removeItem("token")
-    const [response] = error.response.data.result
+    const [response] = error.response.data
     //move to constants
     const statusCodes = [401, 403]
     if (statusCodes.includes(response.error.code)) {

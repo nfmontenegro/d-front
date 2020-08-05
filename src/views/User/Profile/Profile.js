@@ -15,8 +15,8 @@ function Profile() {
   }
 
   useEffect(() => {
-    dispatch(getUserProfile(userState.data.id))
-  }, [dispatch, userState.data.id])
+    dispatch(getUserProfile())
+  }, [dispatch])
 
   const {
     loading,

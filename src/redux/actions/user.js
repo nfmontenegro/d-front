@@ -27,7 +27,7 @@ function registerUserAction(formValues) {
       const response = await requestAPI("users", REQUEST_METHOD["POST"], formValues)
       return dispatch(successRequest(response.data.result))
     } catch (err) {
-      const errorMessage = err.response.data.message
+      const errorMessage = err.response.data.result.message
       return dispatch(failureRequest(errorMessage))
     }
   }
@@ -38,7 +38,7 @@ function loginUserAction(formValues) {
     try {
       dispatch(loadingRequest())
       const response = await requestAPI("login", REQUEST_METHOD["POST"], formValues)
-      localStorage.setItem("token", response.data.token)
+      localStorage.setItem("token", response.data.result.token)
       return dispatch(successRequest(response.data.result))
     } catch (err) {
       return dispatch(failureRequest(err.message))
@@ -65,7 +65,7 @@ function getUsers() {
       const response = await requestAPI("users", REQUEST_METHOD["GET"])
       return dispatch(successRequest(response.data.result))
     } catch (err) {
-      const errorMessage = err.response.data.message
+      const errorMessage = err.response.data.result.message
       return dispatch(failureRequest(errorMessage))
     }
   }
