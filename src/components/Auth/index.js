@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Redirect, withRouter} from 'react-router-dom'
+import React, {Component} from "react"
+import {connect} from "react-redux"
+import {Redirect, withRouter} from "react-router-dom"
 
 export default ComposedComponent => {
   class Authentication extends Component {
     componentDidUpdate(nextProps) {
       if (!nextProps.user.isAuthenticated) {
-        nextProps.history.push('/login')
+        nextProps.history.push("/login")
       }
       return null
     }
